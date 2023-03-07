@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.*;
 
 /**
@@ -17,7 +19,7 @@ import javax.swing.*;
  */
 public class QuestionsFrame extends javax.swing.JFrame {
     private int questions = 0;
-    JPanel[] components;
+    ArrayList<JPanel> components = new ArrayList<JPanel>();
 
     /**
      * Creates new form QuestionsFrame
@@ -29,7 +31,6 @@ public class QuestionsFrame extends javax.swing.JFrame {
     }
     
     public void addQuestionPanel(Question question) {
-        this.questions++;
         final int questions = this.questions;
         JPanel questionPanel = new JPanel();
         //questionPanel.setLayout(new GridLayout(2, 1));
@@ -42,23 +43,40 @@ public class QuestionsFrame extends javax.swing.JFrame {
         questionPanel.add(questionLabel);
         questionPanel.add(questionSelect);
         
-        
-        System.out.println(question.question);
+        this.components.add(questionPanel);
+        components = this.components;
         
         this.setLayout(new GridLayout(1, this.questions));
         this.add(questionPanel);
         this.revalidate();
         this.repaint();
         
+        JFrame frame = this;
+        
         questionSelect.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     int selectedIndex = questionSelect.getSelectedIndex();
+                    
+                    int i = 0;
+                    Iterator<JPanel> iter = components.iterator();
+                    while (iter.hasNext()) {
+                        JPanel panel = iter.next();
+                        if (i > questions) {
+                            frame.remove(panel);
+                            iter.remove();
+                        }
+                        i++;
+                    }
                     question.getAnswer(selectedIndex);
-                    JOptionPane.showMessageDialog(null, questions - 1, "Answer", JOptionPane.INFORMATION_MESSAGE);
+                    frame.revalidate();
+                    frame.repaint();
+
                 }
             }
         });
+        
+        this.questions++;
     }
 
     /**
