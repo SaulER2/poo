@@ -28,8 +28,6 @@ public class Mavenproject1 {
             ]
         }
         */
-        QuestionsFrame frame = new QuestionsFrame();
-        frame.setVisible(true);
         
         Answer answer1 = new Answer("ola", "/ola");
         Answer answer2 = new Answer("ola1", "/ola1");
@@ -46,6 +44,6 @@ public class Mavenproject1 {
         
         Question question = new Question("Test", options1, answers1);
         
-        question.getQuestion(frame);
+        QuestionsFrame frame = new QuestionsFrame(question);
     }
 }

@@ -17,16 +17,20 @@ import javax.swing.*;
  */
 public class QuestionsFrame extends javax.swing.JFrame {
     private int questions = 0;
+    JPanel[] components;
 
     /**
      * Creates new form QuestionsFrame
      */
-    public QuestionsFrame() {
+    public QuestionsFrame(Question mainQuestion) {
         initComponents();
+        mainQuestion.getQuestion(this);
+        this.setVisible(true);
     }
     
     public void addQuestionPanel(Question question) {
         this.questions++;
+        final int questions = this.questions;
         JPanel questionPanel = new JPanel();
         //questionPanel.setLayout(new GridLayout(2, 1));
         JLabel questionLabel = new JLabel(question.question);
@@ -51,7 +55,7 @@ public class QuestionsFrame extends javax.swing.JFrame {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     int selectedIndex = questionSelect.getSelectedIndex();
                     question.getAnswer(selectedIndex);
-                    //JOptionPane.showMessageDialog(null, selectedIndex, "Answer", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, questions - 1, "Answer", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
