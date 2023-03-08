@@ -29,8 +29,9 @@ public class Mavenproject1 {
         }
         */
         
-        Answer answer1 = new Answer("ola", "/ola");
-        Answer answer2 = new Answer("ola1", "/ola1");
+        Answer answer1 = new Answer("ola", "ola1.jpg");
+        
+        Answer answer2 = new Answer("ola1", "ola.jpg");
         
         Answer[] answers2 = {answer2};
         
@@ -43,6 +44,8 @@ public class Mavenproject1 {
         String[] options1 = {"opt 1", "opt 2"};
         
         Question question = new Question("Test", options1, answers1);
+        
+        question1.addAnswer("New Option", question);
         
         QuestionsFrame frame = new QuestionsFrame(question);
     }

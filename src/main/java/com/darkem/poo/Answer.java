@@ -4,29 +4,28 @@
  */
 package com.darkem.poo;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
  * @author emmanuel
  */
 public class Answer {
-    private String answer, image;
+    private String answer;
+    private ImageIcon image;
     public Answer(String answer, String image) {
         this.answer = answer;
-        this.image = image;
+        this.image = new ImageIcon(getClass().getResource("/com/darkem/poo/images/"+image));
     }
     public String getAnswer(QuestionsFrame frame) {
-        /*
-        String[] data = {answer, image};
-        System.out.print("answer: ");
-        System.out.print(answer);
-        System.err.println();
-        System.out.print("image: ");
-        System.out.print(image);
-        System.err.println();
-        */
-        JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);
+        JPanel answerPanel = new JPanel();
+        JLabel answer = new JLabel(this.answer);
+        JLabel imageLabel = new JLabel(this.image);
+        
+        answerPanel.add(answer);
+        answerPanel.add(imageLabel);
+        JOptionPane.showOptionDialog(null, answerPanel, "Answer", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
         return this.answer;
     }
 }

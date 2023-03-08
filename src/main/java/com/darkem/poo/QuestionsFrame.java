@@ -20,6 +20,11 @@ import javax.swing.*;
 public class QuestionsFrame extends javax.swing.JFrame {
     private int questions = 0;
     ArrayList<JPanel> components = new ArrayList<JPanel>();
+    int pages;
+    private int currentPage = 0;
+    private int firstEl;
+    private int elCount;
+    JPanel mainPanel;
 
     /**
      * Creates new form QuestionsFrame
@@ -44,39 +49,65 @@ public class QuestionsFrame extends javax.swing.JFrame {
         questionPanel.add(questionSelect);
         
         this.components.add(questionPanel);
-        components = this.components;
         
-        this.setLayout(new GridLayout(1, this.questions));
-        this.add(questionPanel);
-        this.revalidate();
-        this.repaint();
-        
-        JFrame frame = this;
+        //this.mainPanel.add(questionPanel);
+        QuestionsFrame frame = this;
         
         questionSelect.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     int selectedIndex = questionSelect.getSelectedIndex();
-                    
-                    int i = 0;
-                    Iterator<JPanel> iter = components.iterator();
-                    while (iter.hasNext()) {
-                        JPanel panel = iter.next();
-                        if (i > questions) {
-                            frame.remove(panel);
-                            iter.remove();
-                        }
-                        i++;
+                    int size = frame.components.size();
+                    for(int i=questions+1;i<size;i++) {
+                        frame.components.remove(frame.components.size() - 1);
                     }
                     question.getAnswer(selectedIndex);
-                    frame.revalidate();
-                    frame.repaint();
-
+                    frame.renderQuestions();
                 }
             }
         });
         
+        this.renderQuestions();
+        
         this.questions++;
+    }
+    
+    public void renderQuestions() {
+        JFrame frame = this;
+        JPanel mainPanel = jPanel1;
+        this.mainPanel = mainPanel;
+        
+        int panelComponents = this.mainPanel.getComponentCount();
+        
+        int pages = ((int) this.components.size()) / 4;
+        pages = pages * 4 == this.components.size() ? pages - 1 : pages;
+        int firstEl = pages * 4;
+        int elCount = this.components.size() - pages * 4;
+        
+        this.firstEl = firstEl;
+        this.elCount = elCount;
+        this.pages = pages;
+        this.currentPage = pages;
+        this.renderComponents();
+    }
+    
+    public void renderComponents() {
+        this.mainPanel.removeAll();
+        int firstEl = this.currentPage == pages ? this.firstEl : this.firstEl - this.elCount - 3;
+        int elCount = this.currentPage == pages ? this.elCount : 4;
+        for(int i=firstEl;i<firstEl+elCount;i++){
+            this.mainPanel.add(this.components.get(i));
+        }
+        
+        //int rows = ((float) this.questions - 4*this.pages) / 2 <= 1 ? 1 : Math.round(((float) this.questions - 4*this.pages)/2);
+        //int cols = this.questions+1 < 2 ? this.questions+1 : 2;
+        
+        int rows = Math.round((float) elCount / 2);
+        int cols = elCount < 2 ? 1 : 2;
+        
+        this.mainPanel.setLayout(new GridLayout(rows, cols));
+        this.revalidate();
+        this.repaint();
     }
 
     /**
@@ -88,23 +119,92 @@ public class QuestionsFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Next");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/darkem/poo/images/ola.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(258, 258, 258))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(this.currentPage <= 0) return;
+        this.currentPage--;
+        this.renderComponents();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(this.currentPage >= this.pages) return;
+        this.currentPage++;
+        this.renderComponents();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

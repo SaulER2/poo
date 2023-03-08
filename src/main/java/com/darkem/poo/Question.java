@@ -15,6 +15,10 @@ public class Question {
     public String question;
     private Object[] answers;
     public String[] options;
+    
+    //ArrayList<Object> answers = new ArrayList<Object>();
+    //ArrayList<String> options = new ArrayList<String>();
+    
     private QuestionsFrame frame;
     public Question(String question, String[] options, Object[] answers) {
         this.question = question;
@@ -53,5 +57,22 @@ public class Question {
             return questionAnswer.getQuestion(this.frame);
         }
         return selectedAnswer;
+    }
+    
+    public String addAnswer(String option, Object answer) {
+        String[] newOptions = new String[this.options.length+1];
+        Object[] newAnswers = new Object[this.answers.length+1];
+        
+        for(int i=0;i<this.options.length;i++) {
+            newOptions[i] = this.options[i];
+            newAnswers[i] = this.answers[i];
+        }
+        newOptions[this.options.length] = option;
+        newAnswers[this.answers.length] = answer;
+        
+        this.options = newOptions;
+        this.answers = newAnswers;
+        
+        return option;
     }
 }
