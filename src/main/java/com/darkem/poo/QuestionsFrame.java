@@ -104,7 +104,7 @@ public class QuestionsFrame extends javax.swing.JFrame {
     
     public void renderComponents() {
         this.mainPanel.removeAll();
-        int firstEl = this.currentPage == pages ? this.firstEl : this.firstEl - this.elCount - 3;
+        int firstEl = this.currentPage == pages ? this.firstEl : this.firstEl - 4;
         int elCount = this.currentPage == pages ? this.elCount : 4;
         for(int i=firstEl;i<firstEl+elCount;i++){
             this.mainPanel.add(this.components.get(i));
