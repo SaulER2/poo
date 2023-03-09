@@ -25,6 +25,16 @@ public class Question {
         this.answers = answers;
         this.option = option;
     }
+    public Question(String question, Answer answer, String option) {
+        this.question = question;
+        Object[] answers = {answer};
+        this.answers = answers;
+        this.option = option;
+    }
+    public Question(String question, String option) {
+        this.question = question;
+        this.option = option;
+    }
     public String getQuestion(QuestionsFrame frame) {
         this.frame = frame;
         /*
@@ -59,7 +69,12 @@ public class Question {
         return selectedAnswer;
     }
     
-    public String addAnswer(Object answer) {
+    public void addAnswer(Object answer) {
+        if(this.answers == null) {
+            Object[] answers = {answer};
+            this.answers = answers;
+            return;
+        }
         Object[] newAnswers = new Object[this.answers.length+1];
         
         for(int i=0;i<this.answers.length;i++) {
@@ -68,7 +83,8 @@ public class Question {
         newAnswers[this.answers.length] = answer;
         
         this.answers = newAnswers;
-        
-        return option;
+    }
+    public void addAnswers(Object[] answers) {
+        this.answers = answers;
     }
 }

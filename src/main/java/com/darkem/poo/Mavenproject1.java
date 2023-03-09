@@ -29,7 +29,7 @@ public class Mavenproject1 {
             ]
         }
         */
-        
+        /*
         Answer answer1 = new Answer("ola", "ola1.jpg", "opt 1");
         
         Answer answer2 = new Answer("ola1", "ola.jpg", "opt 3");
@@ -45,5 +45,19 @@ public class Mavenproject1 {
         question1.addAnswer(question);
         
         QuestionsFrame frame = new QuestionsFrame(question);
+        */
+        Question mainQuestion = new Question("Preguntas iniciales", "Main");
+        
+        Question numeroPitidos = new Question("Numero de pitidos", "El problema son pitidos");
+        Question opciones = new Question("Opciones", "ningun pitido");
+        Answer speaker = new Answer("1) verifique bla bla bla", "ola.jpg", "Speaker no funcionando");
+        opciones.addAnswer(speaker);
+        numeroPitidos.addAnswer(opciones);
+        mainQuestion.addAnswer(numeroPitidos);
+        
+        Question otros = new Question("Errores", "Otros errores");
+        
+        
+        QuestionsFrame frame = new QuestionsFrame(mainQuestion);
     }
 }
