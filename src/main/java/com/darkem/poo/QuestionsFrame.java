@@ -40,7 +40,18 @@ public class QuestionsFrame extends javax.swing.JFrame {
         JPanel questionPanel = new JPanel();
         //questionPanel.setLayout(new GridLayout(2, 1));
         JLabel questionLabel = new JLabel(question.question);
-        DefaultComboBoxModel<String> optionsModel = new DefaultComboBoxModel<>(question.options);
+        DefaultComboBoxModel<String> optionsModel = new DefaultComboBoxModel<>();
+        for(int i=0;i<question.answers.length;i++) {
+            Object answer = question.answers[i];
+            if(answer.getClass() == Answer.class) {
+                Answer answerAnswer = (Answer) answer;
+                optionsModel.addElement(answerAnswer.option);
+            }
+            else if(answer.getClass() == Question.class) {
+                Question answerQuestion = (Question) answer;
+                optionsModel.addElement(answerQuestion.option);
+            }
+        }
         JComboBox<String> questionSelect = new JComboBox<>(optionsModel);
         questionSelect.setSelectedItem(null);
         
@@ -122,7 +133,6 @@ public class QuestionsFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,24 +150,15 @@ public class QuestionsFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/darkem/poo/images/ola.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(258, 258, 258))
+            .addGap(0, 666, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 367, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -204,7 +205,6 @@ public class QuestionsFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

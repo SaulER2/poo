@@ -13,17 +13,17 @@ import javax.swing.*;
  */
 public class Question {
     public String question;
-    private Object[] answers;
-    public String[] options;
+    public Object[] answers;
+    public String option;
     
     //ArrayList<Object> answers = new ArrayList<Object>();
     //ArrayList<String> options = new ArrayList<String>();
     
     private QuestionsFrame frame;
-    public Question(String question, String[] options, Object[] answers) {
+    public Question(String question, Object[] answers, String option) {
         this.question = question;
         this.answers = answers;
-        this.options = options;
+        this.option = option;
     }
     public String getQuestion(QuestionsFrame frame) {
         this.frame = frame;
@@ -59,18 +59,14 @@ public class Question {
         return selectedAnswer;
     }
     
-    public String addAnswer(String option, Object answer) {
-        String[] newOptions = new String[this.options.length+1];
+    public String addAnswer(Object answer) {
         Object[] newAnswers = new Object[this.answers.length+1];
         
-        for(int i=0;i<this.options.length;i++) {
-            newOptions[i] = this.options[i];
+        for(int i=0;i<this.answers.length;i++) {
             newAnswers[i] = this.answers[i];
         }
-        newOptions[this.options.length] = option;
         newAnswers[this.answers.length] = answer;
         
-        this.options = newOptions;
         this.answers = newAnswers;
         
         return option;

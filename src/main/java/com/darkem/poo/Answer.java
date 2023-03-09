@@ -13,9 +13,11 @@ import javax.swing.*;
 public class Answer {
     private String answer;
     private ImageIcon image;
-    public Answer(String answer, String image) {
+    public String option;
+    public Answer(String answer, String image, String option) {
         this.answer = answer;
         this.image = new ImageIcon(getClass().getResource("/com/darkem/poo/images/"+image));
+        this.option = option;
     }
     public String getAnswer(QuestionsFrame frame) {
         //JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);

@@ -17,35 +17,32 @@ public class Mavenproject1 {
         question = {
             question: "Test",
             answers: [
-                { "opt 1": { answer: "ola", image: "/ola" } },
-                { "opt 2": {
+                { "answer1": { answer: "ola", image: "/ola", option: "opt 1" } },
+                { "answer2": {
                         question: "Test 1",
                         answers: [
-                            { "opt 3": { answer: "ola1", image: "/ola1" } }
-                        ]
+                            { "answer3": { answer: "ola1", image: "/ola1", option: "opt 2 } }
+                        ],
+                        option: opt 3"
                     }
                 }
             ]
         }
         */
         
-        Answer answer1 = new Answer("ola", "ola1.jpg");
+        Answer answer1 = new Answer("ola", "ola1.jpg", "opt 1");
         
-        Answer answer2 = new Answer("ola1", "ola.jpg");
+        Answer answer2 = new Answer("ola1", "ola.jpg", "opt 3");
         
         Answer[] answers2 = {answer2};
         
-        String[] options2 = {"opt 3"};
-        
-        Question question1 = new Question("Test 1", options2, answers2);
+        Question question1 = new Question("Test 1", answers2, "opt 2");
         
         Object[] answers1 = {answer1, question1};
         
-        String[] options1 = {"opt 1", "opt 2"};
+        Question question = new Question("Test", answers1, "New Option");
         
-        Question question = new Question("Test", options1, answers1);
-        
-        question1.addAnswer("New Option", question);
+        question1.addAnswer(question);
         
         QuestionsFrame frame = new QuestionsFrame(question);
     }
