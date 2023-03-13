@@ -58,6 +58,7 @@ public class Mavenproject1 {
         Question otros = new Question("Errores", "Otros errores");
         
         
-        QuestionsFrame frame = new QuestionsFrame(mainQuestion);
+        //QuestionsFrame frame = new QuestionsFrame(mainQuestion);
+        TutorialFrame frame = new TutorialFrame();
     }
 }

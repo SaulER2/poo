@@ -20,6 +20,8 @@ public class Question {
     //ArrayList<String> options = new ArrayList<String>();
     
     private QuestionsFrame frame;
+    private TutorialFrame frameT;
+    
     public Question(String question, Object[] answers, String option) {
         this.question = question;
         this.answers = answers;
@@ -37,34 +39,27 @@ public class Question {
     }
     public String getQuestion(QuestionsFrame frame) {
         this.frame = frame;
-        /*
-        String[] data = {question};
-        //System.arraycopy(options, 0, data, 1, options.length);
-        System.out.println(question);
-        for(int i=0;i<options.length;i++) {
-            System.out.print(i);
-            System.out.print(": ");
-            System.out.print(options[i]);
-            System.out.println();
-        }
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
-        int option = Integer.parseInt(input);
-        getAnswer(option);
-*/
         
         frame.addQuestionPanel(this);
+        return question;
+    }
+    public String getQuestion(TutorialFrame frame) {
+        this.frameT = frame;
+        
+        frameT.addQuestionPanel(this);
         return question;
     }
     public Object getAnswer(int option) {
         Object selectedAnswer = answers[option];
         if(selectedAnswer.getClass() == Answer.class) {
            Answer answer = (Answer) selectedAnswer;
-           return answer.getAnswer(this.frame);
+           if(this.frame != null) return answer.getAnswer(this.frame);
+           return answer.getAnswer(frameT);
         }
         else if(selectedAnswer.getClass() == Question.class) {
             Question questionAnswer = (Question) selectedAnswer;
-            return questionAnswer.getQuestion(this.frame);
+            if(this.frame != null) return questionAnswer.getQuestion(this.frame);
+            return questionAnswer.getQuestion(frameT);
         }
         return selectedAnswer;
     }

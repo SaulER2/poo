@@ -4,6 +4,7 @@
  */
 package com.darkem.poo;
 
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 /**
@@ -28,6 +29,21 @@ public class Answer {
         answerPanel.add(answer);
         answerPanel.add(imageLabel);
         JOptionPane.showOptionDialog(null, answerPanel, "Answer", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        return this.answer;
+    }
+    public String getAnswer(TutorialFrame frame) {
+        //JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);
+        JPanel answerPanel = new JPanel();
+        JLabel answer = new JLabel(this.answer);
+        JLabel imageLabel = new JLabel(this.image);
+        
+        answerPanel.add(answer);
+        answerPanel.add(imageLabel);
+        int selection = JOptionPane.showOptionDialog(null, answerPanel, "Answer", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        if(selection >= 0) {
+            Questions questions = new Questions();
+            frame.dispose();
+        }
         return this.answer;
     }
 }
