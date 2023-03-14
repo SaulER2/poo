@@ -24,6 +24,7 @@ public class Answer {
         //JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);
         JPanel answerPanel = new JPanel();
         JLabel answer = new JLabel(this.answer);
+        answer.setText("<html>Razón:<br>"+this.option+"<br>"+this.answer);
         JLabel imageLabel = new JLabel(this.image);
         
         answerPanel.add(answer);
@@ -35,6 +36,7 @@ public class Answer {
         //JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);
         JPanel answerPanel = new JPanel();
         JLabel answer = new JLabel(this.answer);
+        answer.setText("<html>Razón:<br>"+this.option+"<br><br>Solución:<br>"+this.answer);
         JLabel imageLabel = new JLabel(this.image);
         
         answerPanel.add(answer);
