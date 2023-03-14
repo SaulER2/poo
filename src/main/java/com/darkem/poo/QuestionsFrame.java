@@ -4,6 +4,7 @@
  */
 package com.darkem.poo;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,7 @@ public class QuestionsFrame extends javax.swing.JFrame {
     private int firstEl;
     private int elCount;
     JPanel mainPanel;
+    private Color color1 = new Color(5,16,148); 
 
     /**
      * Creates new form QuestionsFrame
@@ -54,6 +56,11 @@ public class QuestionsFrame extends javax.swing.JFrame {
         }
         JComboBox<String> questionSelect = new JComboBox<>(optionsModel);
         questionSelect.setSelectedItem(null);
+        
+        //Estilo
+        questionPanel.setBackground(color1);
+        questionLabel.setForeground(Color.white);
+        questionSelect.setBackground(Color.white);
         
         
         questionPanel.add(questionLabel);
@@ -87,6 +94,8 @@ public class QuestionsFrame extends javax.swing.JFrame {
         JFrame frame = this;
         JPanel mainPanel = jPanel1;
         this.mainPanel = mainPanel;
+        
+        this.mainPanel.setBackground(color1); //Color fondo
         
         int panelComponents = this.mainPanel.getComponentCount();
         
