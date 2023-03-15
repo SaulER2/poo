@@ -46,18 +46,10 @@ public class Mavenproject1 {
         
         QuestionsFrame frame = new QuestionsFrame(question);
         */
-        Question mainQuestion = new Question("Preguntas iniciales", "Main");
+        //Question mainQuestion = new Question("Preguntas iniciales", "Main");
         
-        Question numeroPitidos = new Question("Numero de pitidos", "El problema son pitidos");
-        Question opciones = new Question("Opciones", "ningun pitido");
-        Answer speaker = new Answer("1) verifique bla bla bla", "ola.jpg", "Speaker no funcionando");
-        opciones.addAnswer(speaker);
-        numeroPitidos.addAnswer(opciones);
-        mainQuestion.addAnswer(numeroPitidos);
+        //QuestionsFrame frame = new QuestionsFrame(mainQuestion);
         
-        Question otros = new Question("Errores", "Otros errores");
-        
-        
-        QuestionsFrame frame = new QuestionsFrame(mainQuestion);
+        TutorialFrame frame = new TutorialFrame();
     }
 }

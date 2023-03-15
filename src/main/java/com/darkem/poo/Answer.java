@@ -5,6 +5,8 @@
 package com.darkem.poo;
 
 import java.awt.Color;
+import java.awt.event.WindowEvent;
+
 import javax.swing.*;
 
 /**
@@ -15,7 +17,7 @@ public class Answer {
     private String answer;
     private ImageIcon image;
     public String option;
-    private Color color2 = new Color(230,230,230); //Principal: 276E90, Compl: CECFC9, OSCURO: 0A3143, CLARO: EFEFEF
+    private Color color2 = new Color(10,49,67);
     public Answer(String answer, String image, String option) {
         this.answer = answer;
         this.image = new ImageIcon(getClass().getResource("/com/darkem/poo/images/"+image));
@@ -26,6 +28,7 @@ public class Answer {
         //JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);
         JPanel answerPanel = new JPanel();
         JLabel answer = new JLabel(this.answer);
+        answer.setText("<html>Razón:<br>"+this.option+"<br>"+this.answer);
         JLabel imageLabel = new JLabel(this.image);
         answerPanel.setBackground(color2);
         //answer.setForeground(Color.white);
@@ -36,4 +39,20 @@ public class Answer {
         return this.answer;
     }
     
+    public String getAnswer(TutorialFrame frame) {
+        //JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);
+        JPanel answerPanel = new JPanel();
+        JLabel answer = new JLabel(this.answer);
+        answer.setText("<html>Razón:<br>"+this.option+"<br><br>Solución:<br>"+this.answer);
+        JLabel imageLabel = new JLabel(this.image);
+        
+        answerPanel.add(answer);
+        answerPanel.add(imageLabel);
+        int selection = JOptionPane.showOptionDialog(null, answerPanel, "Answer", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        if(selection >= 0) {
+            Questions questions = new Questions();
+            frame.dispose();
+        }
+        return this.answer;
+    }
 }
