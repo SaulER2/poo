@@ -46,7 +46,6 @@ public class Mavenproject1 {
         
         QuestionsFrame frame = new QuestionsFrame(question);
         */
-        
         //QuestionsFrame frame = new QuestionsFrame(mainQuestion);
         TutorialFrame frame = new TutorialFrame();
     }
