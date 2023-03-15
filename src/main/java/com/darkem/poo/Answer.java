@@ -18,6 +18,7 @@ public class Answer {
     private ImageIcon image;
     public String option;
     private Color color2 = new Color(10,49,67);
+    private Color color4 = new Color(239,239,239);
     public Answer(String answer, String image, String option) {
         this.answer = answer;
         this.image = new ImageIcon(getClass().getResource("/com/darkem/poo/images/"+image));
@@ -31,7 +32,7 @@ public class Answer {
         answer.setText("<html>Razón:<br>"+this.option+"<br>"+this.answer);
         JLabel imageLabel = new JLabel(this.image);
         answerPanel.setBackground(color2);
-        //answer.setForeground(Color.white);
+        answer.setForeground(color4);
         
         answerPanel.add(answer);
         answerPanel.add(imageLabel);
@@ -45,6 +46,8 @@ public class Answer {
         JLabel answer = new JLabel(this.answer);
         answer.setText("<html>Razón:<br>"+this.option+"<br><br>Solución:<br>"+this.answer);
         JLabel imageLabel = new JLabel(this.image);
+        answerPanel.setBackground(color2);
+        answer.setForeground(color4);
         
         answerPanel.add(answer);
         answerPanel.add(imageLabel);

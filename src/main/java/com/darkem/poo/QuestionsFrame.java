@@ -5,6 +5,8 @@
 package com.darkem.poo;
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +29,7 @@ public class QuestionsFrame extends javax.swing.JFrame {
     private int elCount;
     JPanel mainPanel;
     //private Color color1 = new Color(5,16,148);
-    private Color color1 = new Color(39,110,114);//Principal
+    private Color color1 = new Color(5,16,148);//Principal
     private Color color2 = new Color(206,207,201);//Complementario
     private Color color3 = new Color(10,49,67);//Oscuro
     private Color color4 = new Color(239,239,239);//Claro
@@ -62,6 +64,12 @@ public class QuestionsFrame extends javax.swing.JFrame {
         JComboBox<String> questionSelect = new JComboBox<>(optionsModel);
         questionSelect.setSelectedItem(null);
         
+        
+        questionSelect.setMaximumSize(questionSelect.getPreferredSize());
+        questionSelect.setAlignmentX(CENTER_ALIGNMENT);
+        questionLabel.setAlignmentX(CENTER_ALIGNMENT);
+        questionPanel.setLayout(new BoxLayout(questionPanel, BoxLayout.Y_AXIS));
+        
         //Estilo
         questionPanel.setBackground(color1);
         questionLabel.setForeground(color4);
@@ -71,7 +79,19 @@ public class QuestionsFrame extends javax.swing.JFrame {
         questionPanel.add(questionLabel);
         questionPanel.add(questionSelect);
         
-        this.components.add(questionPanel);
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setBackground(color1);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.fill = GridBagConstraints.CENTER;
+
+        centerPanel.add(questionPanel, c);
+
+        this.components.add(centerPanel);
         
         //this.mainPanel.add(questionPanel);
         QuestionsFrame frame = this;
@@ -145,8 +165,6 @@ public class QuestionsFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -158,20 +176,6 @@ public class QuestionsFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Next");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -180,7 +184,7 @@ public class QuestionsFrame extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
         );
 
         jMenuBar1.setAlignmentX(0.0F);
@@ -219,41 +223,15 @@ public class QuestionsFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if(this.currentPage <= 0) return;
-        this.currentPage--;
-        this.renderComponents();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        if(this.currentPage >= this.pages) return;
-        this.currentPage++;
-        this.renderComponents();
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
@@ -271,8 +249,6 @@ public class QuestionsFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

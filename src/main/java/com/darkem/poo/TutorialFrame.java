@@ -5,6 +5,8 @@
 package com.darkem.poo;
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,6 +65,11 @@ public class TutorialFrame extends javax.swing.JFrame {
         JComboBox<String> questionSelect = new JComboBox<>(optionsModel);
         questionSelect.setSelectedItem(null);
         
+        questionSelect.setMaximumSize(questionSelect.getPreferredSize());
+        questionSelect.setAlignmentX(CENTER_ALIGNMENT);
+        questionLabel.setAlignmentX(CENTER_ALIGNMENT);
+        questionPanel.setLayout(new BoxLayout(questionPanel, BoxLayout.Y_AXIS));
+        
         questionPanel.setBackground(color1);
         questionLabel.setForeground(color4);
         questionSelect.setBackground(color2);
@@ -70,7 +77,19 @@ public class TutorialFrame extends javax.swing.JFrame {
         questionPanel.add(questionLabel);
         questionPanel.add(questionSelect);
         
-        this.components.add(questionPanel);
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setBackground(color1);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.fill = GridBagConstraints.CENTER;
+
+        centerPanel.add(questionPanel, c);
+
+        this.components.add(centerPanel);
         
         //this.mainPanel.add(questionPanel);
         TutorialFrame frame = this;
