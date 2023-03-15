@@ -26,7 +26,8 @@ public class TutorialFrame extends javax.swing.JFrame {
     private int firstEl;
     private int elCount;
     JPanel mainPanel;
-    private Color color1 = new Color(39,110,114);
+    private Color color1 = new Color(5,16,148);
+    //private Color color1 = new Color(39,110,114);
     private Color color2 = new Color(206,207,201);//Complementario
     private Color color3 = new Color(10,49,67);//Oscuro
     private Color color4 = new Color(239,239,239);//Claro
