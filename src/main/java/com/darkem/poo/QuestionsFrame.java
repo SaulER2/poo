@@ -15,6 +15,7 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -47,7 +48,7 @@ public class QuestionsFrame extends javax.swing.JFrame {
     
     public void addQuestionPanel(Question question) {
         final int questions = this.questions;
-        JPanel questionPanel = new JPanel();
+        DropShadowPanel questionPanel = new DropShadowPanel(10, new Color(230, 233, 237));
         //questionPanel.setLayout(new GridLayout(2, 1));
         JLabel questionLabel = new JLabel(question.question);
         DefaultComboBoxModel<String> optionsModel = new DefaultComboBoxModel<>();
@@ -72,8 +73,9 @@ public class QuestionsFrame extends javax.swing.JFrame {
         questionPanel.setLayout(new BoxLayout(questionPanel, BoxLayout.Y_AXIS));
         
         //Estilo
-        questionPanel.setBackground(color1);
-        questionLabel.setForeground(color4);
+        //questionPanel.setBackground(color1);
+        //questionPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        questionLabel.setForeground(new Color(0, 0, 0));
         questionSelect.setBackground(color2);
         
         
@@ -139,22 +141,28 @@ public class QuestionsFrame extends javax.swing.JFrame {
     
     public void renderComponents() {
         this.mainPanel.removeAll();
-        int firstEl = this.currentPage == pages ? this.firstEl : this.firstEl - 4;
-        int elCount = this.currentPage == pages ? this.elCount : 4;
-        for(int i=firstEl;i<firstEl+elCount;i++){
-            this.mainPanel.add(this.components.get(i));
+        //int firstEl = this.currentPage == pages ? this.firstEl : this.firstEl - 4;
+        //int elCount = this.currentPage == pages ? this.elCount : 4;
+
+
+        // Cambiar el administrador de diseño a GridBagLayout
+        this.mainPanel.setLayout(new GridBagLayout());
+
+        // Establecer la posición de cada componente en el panel
+        GridBagConstraints gbc = new GridBagConstraints();
+        for (int i = 0; i < elCount; i++) {
+            gbc.gridx = i;
+            gbc.gridy = i;
+            gbc.anchor = GridBagConstraints.WEST; // Establecer la alineación a la izquierda
+            gbc.fill = GridBagConstraints.HORIZONTAL; // Establecer el relleno horizontal
+            gbc.weightx = 1.0;
+            this.mainPanel.add(this.components.get(i), gbc);
         }
-        
-        //int rows = ((float) this.questions - 4*this.pages) / 2 <= 1 ? 1 : Math.round(((float) this.questions - 4*this.pages)/2);
-        //int cols = this.questions+1 < 2 ? this.questions+1 : 2;
-        
-        int rows = Math.round((float) elCount / 2);
-        int cols = elCount < 2 ? 1 : 2;
-        
-        this.mainPanel.setLayout(new GridLayout(rows, cols));
+
         this.revalidate();
         this.repaint();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
