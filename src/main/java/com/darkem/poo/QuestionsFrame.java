@@ -7,15 +7,9 @@ package com.darkem.poo;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.Iterator;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -28,7 +22,6 @@ public class QuestionsFrame extends BaseFrame {
      * Creates new form QuestionsFrame
      */
     public QuestionsFrame(Question mainQuestion) {
-        super();
         initComponents();
         mainQuestion.getQuestion(this);
         System.out.println(jLabel1);
@@ -36,75 +29,8 @@ public class QuestionsFrame extends BaseFrame {
     }
     
     public void addQuestionPanel(Question question) {
-        final int questions = this.questions;
-        DropShadowPanel questionPanel = new DropShadowPanel(10, new Color(230, 233, 237));
-        //questionPanel.setLayout(new GridLayout(2, 1));
-        JLabel questionLabel = new JLabel(question.question);
-        DefaultComboBoxModel<String> optionsModel = new DefaultComboBoxModel<>();
-        for(int i=0;i<question.answers.length;i++) {
-            Object answer = question.answers[i];
-            if(answer.getClass() == Answer.class) {
-                Answer answerAnswer = (Answer) answer;
-                optionsModel.addElement(answerAnswer.option);
-            }
-            else if(answer.getClass() == Question.class) {
-                Question answerQuestion = (Question) answer;
-                optionsModel.addElement(answerQuestion.option);
-            }
-        }
-        JComboBox<String> questionSelect = new JComboBox<>(optionsModel);
-        questionSelect.setSelectedItem(null);
-        
-        
-        questionSelect.setMaximumSize(questionSelect.getPreferredSize());
-        questionSelect.setAlignmentX(CENTER_ALIGNMENT);
-        questionLabel.setAlignmentX(CENTER_ALIGNMENT);
-        questionPanel.setLayout(new BoxLayout(questionPanel, BoxLayout.Y_AXIS));
-        
-        //Estilo
-        //questionPanel.setBackground(color1);
-        //questionPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        questionLabel.setForeground(new Color(0, 0, 0));
-        questionSelect.setBackground(color2);
-        
-        
-        questionPanel.add(questionLabel);
-        questionPanel.add(questionSelect);
-        
-        JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setBackground(color1);
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.weightx = 1.0;
-        c.weighty = 1.0;
-        c.fill = GridBagConstraints.CENTER;
-
-        centerPanel.add(questionPanel, c);
-
-        this.components.add(centerPanel);
-        
-        //this.mainPanel.add(questionPanel);
-        QuestionsFrame frame = this;
-        
-        questionSelect.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    int selectedIndex = questionSelect.getSelectedIndex();
-                    int size = frame.components.size();
-                    for(int i=questions+1;i<size;i++) {
-                        frame.components.remove(frame.components.size() - 1);
-                    }
-                    question.getAnswer(selectedIndex);
-                    frame.renderQuestions();
-                }
-            }
-        });
-        
-        this.renderQuestions();
-        
-        this.questions++;
+        JPanel mainPanel = jPanel1;
+        super.addQuestionPanel(question, mainPanel);
     }
     
      public void renderQuestions() {

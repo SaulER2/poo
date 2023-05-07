@@ -9,7 +9,6 @@ package com.darkem.poo;
  * @author emmanuel
  */
 import java.awt.Color;
-import javax.swing.JFrame;
 
 /**
  *

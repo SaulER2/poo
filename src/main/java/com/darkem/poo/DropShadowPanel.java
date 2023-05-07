@@ -21,7 +21,7 @@ import javax.swing.border.Border;
  */
 public class DropShadowPanel extends JPanel {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     public int pixels;
     public Color backgroundColor;
 
@@ -36,8 +36,16 @@ private static final long serialVersionUID = 1L;
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
+        
+        g2d.setColor(this.backgroundColor);
+
+        int offsetX = 10;
+        int offsetY = 10;
         int topOpacity = 100;
         int borderRadius = 10;
+        
+        //g2d.fillRect(0, 0, getWidth() - offsetX, getHeight() - offsetY);
+
         for (int i = 0; i < pixels; i++) {
             g2d.setColor(new Color(this.backgroundColor.getRed(), this.backgroundColor.getGreen(), this.backgroundColor.getBlue(), ((topOpacity / pixels) * i)));
             g2d.fill(new RoundRectangle2D.Double(i, i, this.getWidth() - ((i * 2) + 1), this.getHeight() - ((i * 2) + 1), borderRadius, borderRadius));

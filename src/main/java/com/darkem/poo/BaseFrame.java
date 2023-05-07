@@ -7,7 +7,6 @@ package com.darkem.poo;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class BaseFrame extends JFrame {
     public void addQuestionPanel(Question question, JPanel mainPanel) {
         this.mainPanel = mainPanel;
         final int questions = this.questions;
-        DropShadowPanel questionPanel = new DropShadowPanel(10, new Color(230, 233, 237));
+        DropShadowPanel questionPanel = new DropShadowPanel(15, new Color(230, 233, 237));
         //questionPanel.setLayout(new GridLayout(2, 1));
         JLabel questionLabel = new JLabel(question.question);
         DefaultComboBoxModel<String> optionsModel = new DefaultComboBoxModel<>();
