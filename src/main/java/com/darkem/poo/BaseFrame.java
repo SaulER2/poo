@@ -4,14 +4,18 @@
  */
 package com.darkem.poo;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,24 +40,37 @@ public class BaseFrame extends JFrame {
     public Color color4 = new Color(239,239,239);//Claro
     
     public void renderComponents() {
-        this.mainPanel.removeAll();
-        //int firstEl = this.currentPage == pages ? this.firstEl : this.firstEl - 4;
-        //int elCount = this.currentPage == pages ? this.elCount : 4;
+        JPanel content = new JPanel(new GridBagLayout()); // Crear nuevo panel para los componentes
+        content.setOpaque(false); // Hacer el panel transparente
+        content.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Añadir un borde vacío para separación
 
+        content.removeAll();
 
-        // Cambiar el administrador de diseño a GridBagLayout
-        this.mainPanel.setLayout(new GridBagLayout());
-
-        // Establecer la posición de cada componente en el panel
         GridBagConstraints gbc = new GridBagConstraints();
         for (int i = 0; i < elCount; i++) {
             gbc.gridx = i;
             gbc.gridy = i;
-            gbc.anchor = GridBagConstraints.WEST; // Establecer la alineación a la izquierda
-            gbc.fill = GridBagConstraints.HORIZONTAL; // Establecer el relleno horizontal
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.weightx = 1.0;
-            this.mainPanel.add(this.components.get(i), gbc);
+            content.add(components.get(i), gbc);
         }
+
+        this.mainPanel.removeAll(); // Limpiar el panel principal
+
+        // Crear un nuevo panel para la imagen de fondo y añadirlo al principal
+        JPanel backgroundPanel = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(new ImageIcon(getClass().getResource("/com/darkem/poo/images/bg.jpg")).getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        backgroundPanel.setOpaque(false); // Hacer el panel transparente
+        backgroundPanel.add(content, BorderLayout.CENTER); // Añadir el contenido al panel de fondo
+
+        this.mainPanel.setLayout(new BorderLayout()); // Establecer el layout al principal
+        this.mainPanel.add(backgroundPanel, BorderLayout.CENTER); // Añadir el nuevo panel al principal en el centro
 
         this.revalidate();
         this.repaint();
@@ -102,7 +119,8 @@ public class BaseFrame extends JFrame {
         questionPanel.add(questionSelect);
         
         JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setBackground(color1);
+        centerPanel.setOpaque(false);
+//centerPanel.setBackground(color1);
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
@@ -138,7 +156,7 @@ public class BaseFrame extends JFrame {
     }
 
     private void renderQuestions() {
-        this.mainPanel.setBackground(color1); //Color fondo
+        //this.mainPanel.setBackground(new Color(0, 0, 0)); //Color fondo
         
         int panelComponents = this.mainPanel.getComponentCount();
         
