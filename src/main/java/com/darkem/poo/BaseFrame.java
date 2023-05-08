@@ -41,7 +41,7 @@ public class BaseFrame extends JFrame {
     public Color color4 = new Color(239,239,239);//Claro
     
     public BaseFrame() {
-        Image icon = new ImageIcon(getClass().getResource("/com/darkem/poo/images/bg.jpg")).getImage();
+        Image icon = new ImageIcon(getClass().getResource("/com/darkem/poo/images/Buho.jpg")).getImage();
         this.setIconImage(icon);
     }
     
