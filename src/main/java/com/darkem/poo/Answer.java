@@ -14,7 +14,7 @@ import javax.swing.*;
  * @author emmanuel
  */
 public class Answer {
-    private String answer;
+    public String answer;
     private ImageIcon image;
     public String option;
     private Color color2 = new Color(10,49,67);
@@ -36,7 +36,7 @@ public class Answer {
         
         answerPanel.add(answer);
         answerPanel.add(imageLabel);
-        JOptionPane.showOptionDialog(null, answerPanel, "Answer", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        JOptionPane.showOptionDialog(null, answerPanel, this.option, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
         return this.answer;
     }
     
@@ -51,9 +51,10 @@ public class Answer {
         
         answerPanel.add(answer);
         answerPanel.add(imageLabel);
-        int selection = JOptionPane.showOptionDialog(null, answerPanel, "Answer", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        int selection = JOptionPane.showOptionDialog(null, answerPanel, "Opciòn elegida", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
         if(selection >= 0) {
             Questions questions = new Questions();
+            questions.init();
             frame.dispose();
         }
         return this.answer;

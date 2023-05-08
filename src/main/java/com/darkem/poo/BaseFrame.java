@@ -39,6 +39,7 @@ public class BaseFrame extends JFrame {
     public Color color2 = new Color(206,207,201);//Complementario
     public Color color3 = new Color(10,49,67);//Oscuro
     public Color color4 = new Color(239,239,239);//Claro
+    public String answerText;
     
     public BaseFrame() {
         Image icon = new ImageIcon(getClass().getResource("/com/darkem/poo/images/Buho.jpg")).getImage();
@@ -75,6 +76,10 @@ public class BaseFrame extends JFrame {
         backgroundPanel.setOpaque(false); // Hacer el panel transparente
         backgroundPanel.add(content, BorderLayout.CENTER); // Añadir el contenido al panel de fondo
 
+        JLabel answer = new JLabel(answerText);
+        answer.setOpaque(false);
+        backgroundPanel.add(answer, BorderLayout.NORTH);
+        
         this.mainPanel.setLayout(new BorderLayout()); // Establecer el layout al principal
         this.mainPanel.add(backgroundPanel, BorderLayout.CENTER); // Añadir el nuevo panel al principal en el centro
 

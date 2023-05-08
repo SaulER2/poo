@@ -21,6 +21,7 @@ public class Question {
     
     private QuestionsFrame frame;
     private TutorialFrame frameT;
+    private TestFrame testFrame;
     
     public Question(String question, Object[] answers, String option) {
         this.question = question;
@@ -43,6 +44,12 @@ public class Question {
         frame.addQuestionPanel(this);
         return question;
     }
+    public String getQuestion(TestFrame frame) {
+        this.testFrame = frame;
+        
+        frame.addQuestionPanel(this);
+        return question;
+    }
     public String getQuestion(TutorialFrame frame) {
         this.frameT = frame;
         
@@ -59,6 +66,8 @@ public class Question {
         else if(selectedAnswer.getClass() == Question.class) {
             Question questionAnswer = (Question) selectedAnswer;
             if(this.frame != null) return questionAnswer.getQuestion(this.frame);
+            if(this.testFrame.getClass(
+            ) == TestFrame.class) return questionAnswer.getQuestion(this.testFrame);
             return questionAnswer.getQuestion(frameT);
         }
         return selectedAnswer;

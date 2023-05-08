@@ -9,6 +9,8 @@ package com.darkem.poo;
  * @author emmanuel
  */
 import java.awt.Color;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -18,6 +20,8 @@ public class Mavenproject1 extends javax.swing.JFrame {
 
     public Mavenproject1() {
         initComponents();
+        Image icon = new ImageIcon(getClass().getResource("/com/darkem/poo/images/Buho.jpg")).getImage();
+        this.setIconImage(icon);
         setLocationRelativeTo(null); //Centre el formulario 
     }
 

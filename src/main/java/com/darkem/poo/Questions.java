@@ -4,15 +4,15 @@
  */
 package com.darkem.poo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author emmanuel
  */
 public class Questions {
-    public Questions() {
-        this.init();
-    }
-    public static void init() {
+    public static Answer[] answers; 
+    private static Question getMainQuestion() {
         Question mainQuestion = new Question("Preguntas iniciales", "Main");
         
         Question numeroPitidos = new Question("Numero de pitidos", "El problema son pitidos");
@@ -247,9 +247,61 @@ public class Questions {
         mainQuestion.addAnswer(errores);
         mainQuestion.addAnswer(hardwere);
         
-    
-        
-        
+        Answer[] answers = {
+            speaker, 
+            pbDC,
+            sSE,
+            pbD,
+            pitidosC,
+            pitidosCon,
+            pitidosLa,
+            pitidosLaCor,
+            pitidosLaDCor,
+            pitidosDLaCor,
+            pitidosDC,
+            pitidosTC,
+            pitidosCC,
+            pitidosCinC,
+            pitidosSC,
+            pitidosSieC,
+            pitidosOC,
+            pitidosNC,
+            pitidosDiC,
+            pitidosOnC,
+            pTC,
+            pC,
+            cRA,
+            cAA,
+            rEG,
+            pCS,
+            pcE,
+            eBE,
+            pcRS,
+            pcAS,
+            tR,
+            pcDR,
+            pcDDD,
+            pcTI,
+            pcEN,
+            pcEV,
+            pcVCF,
+            pcVCRF,
+            pcNE,
+            pcADcF,
+            pcVCRTF,
+            rP,
+            rPMF,
+            rPMRF
+        };
+        Questions.answers = answers;
+        return mainQuestion;
+    }
+    public static void init() {
+        Question mainQuestion = getMainQuestion();
         QuestionsFrame frame = new QuestionsFrame(mainQuestion);
+    }
+    public static void initTest() {
+        Question mainQuestion = getMainQuestion();
+        TestFrame frame = new TestFrame(mainQuestion, Questions.answers);
     }
 }

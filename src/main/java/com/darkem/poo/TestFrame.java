@@ -16,20 +16,26 @@ import javax.swing.*;
  *
  * @author emmanuel
  */
-public class QuestionsFrame extends BaseFrame {
+public class TestFrame extends BaseFrame {
     
 
     /**
      * Creates new form QuestionsFrame
      */
-    public QuestionsFrame(Question mainQuestion) {
+    public TestFrame(Question mainQuestion, Answer[] answers) {
         super();
         initComponents();
         mainQuestion.getQuestion(this);
-        System.out.println(jLabel1);
+        int answerIndex = this.randomAnswer(0, answers.length);
+        System.out.println(answers[answerIndex]);
+        this.answerText = answers[answerIndex].answer;
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
         //JFrame autores = new Autores();
+    }
+    public int randomAnswer(int max, int min){
+        int Random = (int)(Math.random()*(max-min)+min);
+        return Random;
     }
     
     public void addQuestionPanel(Question question) {
@@ -57,12 +63,9 @@ public class QuestionsFrame extends BaseFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -71,7 +74,7 @@ public class QuestionsFrame extends BaseFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
@@ -84,20 +87,11 @@ public class QuestionsFrame extends BaseFrame {
         jMenu3.setText("Edit");
         jMenuBar2.add(jMenu3);
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+        jMenu4.setText("File");
+        jMenuBar3.add(jMenu4);
 
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("jCheckBoxMenuItem2");
-
-        jCheckBoxMenuItem3.setSelected(true);
-        jCheckBoxMenuItem3.setText("jCheckBoxMenuItem3");
-
-        jMenu5.setText("File");
+        jMenu5.setText("Edit");
         jMenuBar3.add(jMenu5);
-
-        jMenu6.setText("Edit");
-        jMenuBar3.add(jMenu6);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -169,17 +163,17 @@ public class QuestionsFrame extends BaseFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu7.setText("Evaluación");
+        jMenu6.setText("Salir");
 
-        jMenuItem6.setText("Iniciar");
+        jMenuItem6.setText("Inicio");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem6);
+        jMenu6.add(jMenuItem6);
 
-        jMenuBar1.add(jMenu7);
+        jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
 
@@ -223,22 +217,19 @@ public class QuestionsFrame extends BaseFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
         Questions questions = new Questions();
-        questions.initTest();
+        questions.init();
         this.dispose();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;

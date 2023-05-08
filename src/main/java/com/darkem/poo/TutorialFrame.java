@@ -21,6 +21,7 @@ public class TutorialFrame extends BaseFrame {
         Answer tutorialAnswer = new Answer("Este es un ejemplo de respuesta", "ola.jpg", "Esta es una opcion");
         Question tutorial = new Question("Esta es una pregunta", tutorialAnswer, "tutorial");
         tutorial.getQuestion(this);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
     }
     
@@ -105,6 +106,7 @@ public class TutorialFrame extends BaseFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
 
