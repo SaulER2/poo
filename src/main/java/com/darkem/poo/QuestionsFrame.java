@@ -7,6 +7,7 @@ package com.darkem.poo;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class QuestionsFrame extends BaseFrame {
      * Creates new form QuestionsFrame
      */
     public QuestionsFrame(Question mainQuestion) {
+        super();
         initComponents();
         mainQuestion.getQuestion(this);
         System.out.println(jLabel1);

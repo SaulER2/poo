@@ -16,6 +16,7 @@ public class TutorialFrame extends BaseFrame {
      * Creates new form QuestionsFrame
      */
     public TutorialFrame() {
+        super();
         initComponents();
         Answer tutorialAnswer = new Answer("Este es un ejemplo de respuesta", "ola.jpg", "Esta es una opcion");
         Question tutorial = new Question("Esta es una pregunta", tutorialAnswer, "tutorial");

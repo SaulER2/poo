@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -38,6 +39,11 @@ public class BaseFrame extends JFrame {
     public Color color2 = new Color(206,207,201);//Complementario
     public Color color3 = new Color(10,49,67);//Oscuro
     public Color color4 = new Color(239,239,239);//Claro
+    
+    public BaseFrame() {
+        Image icon = new ImageIcon(getClass().getResource("/com/darkem/poo/images/bg.jpg")).getImage();
+        this.setIconImage(icon);
+    }
     
     public void renderComponents() {
         JPanel content = new JPanel(new GridBagLayout()); // Crear nuevo panel para los componentes
