@@ -27,6 +27,7 @@ public class QuestionsFrame extends BaseFrame {
         initComponents();
         mainQuestion.getQuestion(this);
         System.out.println(jLabel1);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
     }
     
@@ -150,6 +151,7 @@ public class QuestionsFrame extends BaseFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
