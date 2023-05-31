@@ -61,6 +61,7 @@ public class Question {
         if(selectedAnswer.getClass() == Answer.class) {
            Answer answer = (Answer) selectedAnswer;
            if(this.frame != null) return answer.getAnswer(this.frame);
+           if(this.testFrame != null) return answer.getAnswer(this.testFrame);
            return answer.getAnswer(frameT);
         }
         else if(selectedAnswer.getClass() == Question.class) {

@@ -25,11 +25,20 @@ public class Answer {
         this.option = option;
     }
     
-    public String getAnswer(QuestionsFrame frame) {
+    public String getAnswer(BaseFrame frame) {
         //JOptionPane.showMessageDialog(null, this.answer, "Answer", JOptionPane.INFORMATION_MESSAGE);
         JPanel answerPanel = new JPanel();
         JLabel answer = new JLabel(this.answer);
-        answer.setText("<html>Razón:<br>"+this.option+"<br>"+this.answer);
+        String correctAnswer = "";
+        if(frame.getClass() == TestFrame.class) {
+            if(this.answer == frame.answerText) {
+                correctAnswer = "<h1>Obtuviste la respuesta deseada</h1><br>";
+            }
+            else {
+                correctAnswer = "<h1>Esta no es la respuesta deseada</h1><br>";
+            }
+        }
+        answer.setText("<html>" + correctAnswer + "Razón:<br>"+this.option+"<br>"+this.answer);
         JLabel imageLabel = new JLabel(this.image);
         answerPanel.setBackground(color2);
         answer.setForeground(color4);

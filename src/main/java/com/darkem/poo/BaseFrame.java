@@ -42,8 +42,8 @@ public class BaseFrame extends JFrame {
     public String answerText;
     
     public BaseFrame() {
-        Image icon = new ImageIcon(getClass().getResource("/com/darkem/poo/images/Buho.jpg")).getImage();
-        this.setIconImage(icon);
+        //Image icon = new ImageIcon(getClass().getResource("/com/darkem/poo/images/Buho.jpg")).getImage();
+        //this.setIconImage(icon);
     }
     
     public void renderComponents() {
@@ -76,7 +76,7 @@ public class BaseFrame extends JFrame {
         backgroundPanel.setOpaque(false); // Hacer el panel transparente
         backgroundPanel.add(content, BorderLayout.CENTER); // Añadir el contenido al panel de fondo
 
-        JLabel answer = new JLabel(answerText);
+        JLabel answer = new JLabel(this.answerText);
         answer.setOpaque(false);
         backgroundPanel.add(answer, BorderLayout.NORTH);
         

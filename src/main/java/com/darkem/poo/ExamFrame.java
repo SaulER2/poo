@@ -4,43 +4,115 @@
  */
 package com.darkem.poo;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author emmanuel
  */
-public class QuestionsFrame extends BaseFrame {
+public class ExamFrame extends JFrame {
     
 
     /**
      * Creates new form QuestionsFrame
      */
-    public QuestionsFrame(Question mainQuestion) {
+    final JFileChooser fc = new JFileChooser();
+    ArrayList<ExamQuestion> questions = new ArrayList<ExamQuestion>();
+    int currentPage = 0;
+    
+    public ExamFrame() {
         super();
         initComponents();
-        mainQuestion.getQuestion(this);
-        System.out.println(jLabel1);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
-        //JFrame autores = new Autores();
+        fc.setFileFilter(new FileNameExtensionFilter("Archivos de Texto", "txt"));
+        
+        int returnVal = fc.showOpenDialog(ExamFrame.this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            //This is where a real application would open the file.
+            try {
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+                String line;
+                StringBuilder content = new StringBuilder();
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    Boolean isQuestion = line.charAt(0) == '-';
+                    if(isQuestion) {
+                        ExamQuestion question = new ExamQuestion(line.substring(1));
+                        questions.add(question);
+                        System.out.println(question.question);
+                    }
+                    else {
+                        ExamQuestion question = questions.get(questions.size() - 1);
+                        question.addAnswer(line);
+                        questions.set(questions.size() -1, question);
+                    }
+                }
+
+                bufferedReader.close();
+                fileReader.close();
+
+                this.renderQuestions();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Open command cancelled by user.");
+        }
     }
     
-    public void addQuestionPanel(Question question) {
-        JPanel mainPanel = jPanel1;
-        super.addQuestionPanel(question, mainPanel);
+    private void renderQuestions() {
+        jPanel1.removeAll();
+
+        int pages = Math.round((float) (questions.size() / 3.0));
+        int elCount = pages == currentPage + 1 ? pages * 3 - questions.size() : 3;
+
+        jPanel1.setLayout(new GridLayout(elCount, 1)); 
+
+        for (int i = 0; i < elCount; i++) {
+            JPanel questionPanel = new JPanel();
+            questionPanel.setLayout(new BorderLayout());
+
+            ExamQuestion currentQuestion = questions.get(currentPage * 3 + i);
+            JLabel text = new JLabel(currentQuestion.question);
+            questionPanel.add(text, BorderLayout.NORTH);
+
+            JPanel answersPanel = new JPanel();
+            answersPanel.setLayout(new GridLayout(currentQuestion.answers.size(), 1));
+            ButtonGroup group = new ButtonGroup();
+
+            for (String currentAnswer : currentQuestion.answers) {
+                JRadioButton answerButton = new JRadioButton(currentAnswer);
+                group.add(answerButton);
+                answersPanel.add(answerButton);
+            }
+
+            questionPanel.add(answersPanel, BorderLayout.CENTER);
+
+            jPanel1.add(questionPanel);
+        }
+
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }
-    
-     public void renderQuestions() {
-        JPanel mainPanel = jPanel1;
-        super.renderQuestions(mainPanel);
-    }
+
 
 
     /**
@@ -57,24 +129,22 @@ public class QuestionsFrame extends BaseFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -86,22 +156,11 @@ public class QuestionsFrame extends BaseFrame {
         jMenu3.setText("Edit");
         jMenuBar2.add(jMenu3);
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+        jMenu4.setText("File");
+        jMenuBar3.add(jMenu4);
 
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("jCheckBoxMenuItem2");
-
-        jCheckBoxMenuItem3.setSelected(true);
-        jCheckBoxMenuItem3.setText("jCheckBoxMenuItem3");
-
-        jMenu5.setText("File");
+        jMenu5.setText("Edit");
         jMenuBar3.add(jMenu5);
-
-        jMenu6.setText("Edit");
-        jMenuBar3.add(jMenu6);
-
-        jMenuItem7.setText("jMenuItem7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,11 +168,11 @@ public class QuestionsFrame extends BaseFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
+            .addGap(0, 873, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
+            .addGap(0, 360, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(10, 49, 67));
@@ -141,6 +200,31 @@ public class QuestionsFrame extends BaseFrame {
                     .addGap(0, 14, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addGap(0, 14, Short.MAX_VALUE)))
+        );
+
+        jButton1.setText("Atrás");
+
+        jButton2.setText("Siguiente");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenuBar1.setAlignmentX(0.0F);
@@ -173,25 +257,17 @@ public class QuestionsFrame extends BaseFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu7.setText("Evaluación");
+        jMenu6.setText("Salir");
 
-        jMenuItem6.setText("SEDEC");
+        jMenuItem6.setText("Inicio");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem6);
+        jMenu6.add(jMenuItem6);
 
-        jMenuItem8.setText("Examen");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jMenu7.add(jMenuItem8);
-
-        jMenuBar1.add(jMenu7);
+        jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
 
@@ -201,13 +277,16 @@ public class QuestionsFrame extends BaseFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -235,28 +314,21 @@ public class QuestionsFrame extends BaseFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
         Questions questions = new Questions();
-        questions.initTest();
+        questions.init();
         this.dispose();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-        ExamFrame exam = new ExamFrame();
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
@@ -266,9 +338,8 @@ public class QuestionsFrame extends BaseFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

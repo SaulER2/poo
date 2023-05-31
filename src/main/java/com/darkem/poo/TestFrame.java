@@ -27,9 +27,9 @@ public class TestFrame extends BaseFrame {
         initComponents();
         mainQuestion.getQuestion(this);
         int answerIndex = this.randomAnswer(0, answers.length);
-        System.out.println(answers[answerIndex]);
-        this.answerText = answers[answerIndex].answer;
+        this.answerText = "<html>" + answers[answerIndex].answer;
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.renderComponents();
         this.setVisible(true);
         //JFrame autores = new Autores();
     }
