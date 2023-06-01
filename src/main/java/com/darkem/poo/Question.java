@@ -4,9 +4,6 @@
  */
 package com.darkem.poo;
 
-import java.util.*;
-import javax.swing.*;
-
 /**
  *
  * @author emmanuel

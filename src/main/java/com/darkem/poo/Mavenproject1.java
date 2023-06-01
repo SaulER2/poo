@@ -9,8 +9,6 @@ package com.darkem.poo;
  * @author emmanuel
  */
 import java.awt.Color;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 
 /**
  *

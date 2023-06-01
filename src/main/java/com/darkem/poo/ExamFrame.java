@@ -6,17 +6,14 @@ package com.darkem.poo;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Enumeration;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -33,6 +30,8 @@ public class ExamFrame extends JFrame {
     final JFileChooser fc = new JFileChooser();
     ArrayList<ExamQuestion> questions = new ArrayList<ExamQuestion>();
     int currentPage = 0;
+    int pages = 0;
+    int correctAnswersCount = 0;
     
     public ExamFrame() {
         super();
@@ -50,9 +49,9 @@ public class ExamFrame extends JFrame {
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
 
                 String line;
-                StringBuilder content = new StringBuilder();
 
                 while ((line = bufferedReader.readLine()) != null) {
+                    line = new String(Base64.getDecoder().decode(line));
                     Boolean isQuestion = line.charAt(0) == '-';
                     if(isQuestion) {
                         ExamQuestion question = new ExamQuestion(line.substring(1));
@@ -82,30 +81,13 @@ public class ExamFrame extends JFrame {
         jPanel1.removeAll();
 
         int pages = Math.round((float) (questions.size() / 3.0));
-        int elCount = pages == currentPage + 1 ? pages * 3 - questions.size() : 3;
+        this.pages = pages;
+        int elCount = pages == currentPage + 1 ? 3 - (pages * 3 - questions.size()) : 3;
 
         jPanel1.setLayout(new GridLayout(elCount, 1)); 
 
         for (int i = 0; i < elCount; i++) {
-            JPanel questionPanel = new JPanel();
-            questionPanel.setLayout(new BorderLayout());
-
-            ExamQuestion currentQuestion = questions.get(currentPage * 3 + i);
-            JLabel text = new JLabel(currentQuestion.question);
-            questionPanel.add(text, BorderLayout.NORTH);
-
-            JPanel answersPanel = new JPanel();
-            answersPanel.setLayout(new GridLayout(currentQuestion.answers.size(), 1));
-            ButtonGroup group = new ButtonGroup();
-
-            for (String currentAnswer : currentQuestion.answers) {
-                JRadioButton answerButton = new JRadioButton(currentAnswer);
-                group.add(answerButton);
-                answersPanel.add(answerButton);
-            }
-
-            questionPanel.add(answersPanel, BorderLayout.CENTER);
-
+            ExamQuestion questionPanel = questions.get(currentPage * 3 + i);
             jPanel1.add(questionPanel);
         }
 
@@ -203,8 +185,18 @@ public class ExamFrame extends JFrame {
         );
 
         jButton1.setText("Atrás");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Siguiente");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -317,6 +309,56 @@ public class ExamFrame extends JFrame {
         questions.init();
         this.dispose();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(this.currentPage+1 < this.pages) {
+            System.out.println("Next page");
+            this.currentPage++;
+            this.renderQuestions();
+            return;
+        }
+        correctAnswersCount = 0;
+        boolean allDone = true;
+        for (ExamQuestion question : questions) {
+            ButtonGroup group = question.group;
+            String selected = null;
+            for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements();) {
+                AbstractButton button = buttons.nextElement();
+
+                if (button.isSelected()) {
+                    selected = button.getText();
+                    break;
+                }
+            }
+            if(selected == null) {
+                allDone = false;
+            }
+            if(selected == question.correctAnswer) {
+                this.correctAnswersCount++;
+            }
+        }
+        if(allDone) {
+            int send = JOptionPane.showOptionDialog(null, "¿Seguro que quieres finalizar el examen?", "Enviar", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+            if(send == 0) {
+                JPanel resultsPanel = new JPanel(new BorderLayout());
+                JLabel scorePercentage = new JLabel("<html><h1>Puntaje:</h1><br><p>" + this.correctAnswersCount + "/" + this.questions.size() + "</p> <h2>" + Math.round((float) this.correctAnswersCount / this.questions.size() * 100) + "%</h2>");
+                resultsPanel.add(scorePercentage, BorderLayout.CENTER);
+                JOptionPane.showOptionDialog(null, resultsPanel, "Enviado", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+            }
+        }
+        else {
+            System.out.println("Tienes que responder todas las preguntas");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(this.currentPage > 0) {
+            this.currentPage--;
+            this.renderQuestions();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
