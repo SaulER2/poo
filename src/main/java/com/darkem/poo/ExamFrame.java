@@ -13,7 +13,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Random;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -64,6 +66,14 @@ public class ExamFrame extends JFrame {
                         questions.set(questions.size() -1, question);
                     }
                 }
+                
+                Random rnd = new Random();
+                
+                for (ExamQuestion question : questions) {
+                    question.createGroup();
+                }
+                
+                Collections.shuffle(questions, rnd);
 
                 bufferedReader.close();
                 fileReader.close();
@@ -145,6 +155,8 @@ public class ExamFrame extends JFrame {
         jMenuBar3.add(jMenu5);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(5, 16, 148));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -348,7 +360,7 @@ public class ExamFrame extends JFrame {
             }
         }
         else {
-            System.out.println("Tienes que responder todas las preguntas");
+            JOptionPane.showMessageDialog(this, "Tienes que responder todas las preguntas para enviar.", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
